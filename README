@@ -1,1 +1,4 @@
-Trial version of prediction of magnetic properties of nanoparticles, 2023 project 
+Trial version of prediction of magnetic properties of nanoparticles, 2023 project. 
+
+A project aimed at investigating the magnetic properties of nanomaterials using machine learning methods such as RandomForest and Bagging is focused on developing predictive models for the effective anisotropy constant. This constant is a crucial parameter characterizing the magnetic properties of nanomaterials.
+The raw data includes various parameters describing the structural and magnetic characteristics of the materials. The goal is to identify correlations between these parameters and the effective anisotropy constant using machine learning methods. The project involves preprocessing the data, selecting and training RandomForest and Bagging models, as well as evaluating the model's quality. Additionally, the results are interpreted, including the analysis of the importance of various parameters using SHAP (SHapley Additive exPlanations) methods.
