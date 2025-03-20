@@ -1,0 +1,13 @@
+Collecting git+https://github.com/KindXiaoming/pykan.git
+  Cloning https://github.com/KindXiaoming/pykan.git to c:\users\ксения\appdata\local\temp\pip-req-build-66mj74a_
+  Resolved https://github.com/KindXiaoming/pykan.git to commit ecde4ec3274d3bef1ad737479cf126aed38ab530
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Building wheels for collected packages: pykan
+  Building wheel for pykan (setup.py): started
+  Building wheel for pykan (setup.py): finished with status 'done'
+  Created wheel for pykan: filename=pykan-0.2.8-py3-none-any.whl size=78306 sha256=c236a931533de58cae8e1932f34371aa8859081ecbe91f6a3a153c17c4730d07
+  Stored in directory: C:\Users\Ксения\AppData\Local\Temp\pip-ephem-wheel-cache-uj4oifv8\wheels\fe\d7\fd\0761cdc11f5bfb103a1ebadb6bea12c86f64f62bc6b1303e06
+Successfully built pykan
+Installing collected packages: pykan
+Successfully installed pykan-0.2.8
