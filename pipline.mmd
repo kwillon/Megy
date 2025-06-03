@@ -1,0 +1,58 @@
+flowchart TD
+
+  %% === DATA COLLECTION ===
+  subgraph Data_Preparation
+    A1[Collect data from scientific articles]
+    A2[Dataset A: numerical features – magnetic, thermal, shape, structure]
+    A3[Dataset B: magnetic parameters and synthesis text]
+    A1 --> A2
+    A1 --> A3
+  end
+
+  %% === MACHINE LEARNING ===
+  subgraph ML_Modeling
+    B1[Train ML models]
+    B2[Predict Hc, Mr, Ms]
+    A2 --> B1 --> B2
+  end
+
+  %% === RAG SETUP ===
+  subgraph RAG_Indexing
+    C1[Vectorize numeric and synthesis text]
+    C2[Index into vector DB]
+    A3 --> C1 --> C2
+  end
+
+  %% === USER INTERACTION ===
+  subgraph User_Interaction
+    D1[User input]
+    D2{Select task}
+    D1 --> D2
+    B2 --> D2
+    A3 --> D2
+
+    E1[Scenario A: All parameters → predict synthesis]
+    E2[Scenario B: 1–2 parameters → predict rest or text]
+    E3[Scenario C: Synthesis text → predict parameters]
+    E4[Scenario D: Text + 1 param → predict missing ones]
+
+    D2 --> E1
+    D2 --> E2
+    D2 --> E3
+    D2 --> E4
+  end
+
+  %% === RAG PROCESSING ===
+  subgraph RAG_Generation
+    F1[Retrieve similar examples from Dataset B]
+    F2[LLM generates text or numbers]
+    E1 --> F1
+    E2 --> F1
+    E3 --> F1
+    E4 --> F1
+    F1 --> F2
+  end
+
+  %% === OUTPUT ===
+  G1[Output: synthesis text or magnetic parameters]
+  F2 --> G1
