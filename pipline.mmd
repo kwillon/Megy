@@ -1,40 +1,59 @@
-flowchart TD
+%%{ 
+  init: {
+    "theme": "base",
+    "themeVariables": {
+      "nodeSpacing": 80,
+      "rankSpacing": 100,
+      "fontSize": "16px"
+    }
+  }
+}%%
 
-  %% === DATA COLLECTION ===
-  subgraph Data_Preparation
-    A1[Collect data from scientific articles]
-    A2[Dataset A: numerical features – magnetic, thermal, shape, structure]
-    A3[Dataset B: magnetic parameters and synthesis text]
+flowchart LR
+  %% Переопределяем стандартный стиль узлов на светло-голубой
+  classDef default fill:#E3F2FD,stroke:#90CAF9,stroke-width:2px,color:#000;
+
+  %% ─── 1. Data Preparation ───
+  subgraph DP["Data Preparation"]
+    direction TB
+    A1["Collect data<br/>from scientific articles"]
+    A2["Dataset A:<br/>numerical features<br/>(magnetic, thermal,<br/>shape, structure)"]
+    A3["Dataset B:<br/>magnetic parameters<br/>& synthesis text"]
     A1 --> A2
     A1 --> A3
   end
 
-  %% === MACHINE LEARNING ===
-  subgraph ML_Modeling
-    B1[Train ML models]
-    B2[Predict Hc, Mr, Ms]
-    A2 --> B1 --> B2
+  %% ─── 2. ML Modeling ───
+  subgraph ML["ML Modeling"]
+    direction TB
+    B1["Train ML models"]
+    B2["Predict Hc, Mr, Ms"]
+    A2 --> B1
+    B1 --> B2
   end
 
-  %% === RAG SETUP ===
-  subgraph RAG_Indexing
-    C1[Vectorize numeric and synthesis text]
-    C2[Index into vector DB]
-    A3 --> C1 --> C2
+  %% ─── 3. RAG Indexing ───
+  subgraph RI["RAG Indexing"]
+    direction TB
+    C1["Vectorize numeric<br/>and synthesis text"]
+    C2["Index into<br/>vector DB"]
+    A3 --> C1
+    C1 --> C2
   end
 
-  %% === USER INTERACTION ===
-  subgraph User_Interaction
-    D1[User input]
+  %% ─── 4. User Interaction ───
+  subgraph UI["User Interaction"]
+    direction TB
+    D1["User input"]
     D2{Select task}
-    D1 --> D2
     B2 --> D2
-    A3 --> D2
+    C2 --> D2
+    D1 --> D2
 
-    E1[Scenario A: All parameters → predict synthesis]
-    E2[Scenario B: 1–2 parameters → predict rest or text]
-    E3[Scenario C: Synthesis text → predict parameters]
-    E4[Scenario D: Text + 1 param → predict missing ones]
+    E1["Scenario A:<br/>All parameters →<br/>predict synthesis"]
+    E2["Scenario B:<br/>1–2 parameters →<br/>predict rest or text"]
+    E3["Scenario C:<br/>Synthesis text →<br/>predict parameters"]
+    E4["Scenario D:<br/>Text + 1 parameter →<br/>predict missing ones"]
 
     D2 --> E1
     D2 --> E2
@@ -42,17 +61,25 @@ flowchart TD
     D2 --> E4
   end
 
-  %% === RAG PROCESSING ===
-  subgraph RAG_Generation
-    F1[Retrieve similar examples from Dataset B]
-    F2[LLM generates text or numbers]
+  %% ─── 5. RAG Generation ───
+  subgraph RG["RAG Generation"]
+    direction TB
+    F1["Retrieve similar<br/>examples from<br/>Dataset B"]
+    F2["LLM generates<br/>text or numbers"]
     E1 --> F1
     E2 --> F1
     E3 --> F1
     E4 --> F1
     F1 --> F2
+    F2 --> G1
   end
 
-  %% === OUTPUT ===
-  G1[Output: synthesis text or magnetic parameters]
-  F2 --> G1
+  %% ─── 6. Final Output ───
+  G1["Output:<br/>– synthesis text<br/>– magnetic parameters"]
+
+  %% ─── Невидимые связи между субграфами (выравнивание) ───
+  DP ~~~ ML
+  ML ~~~ RI
+  RI ~~~ UI
+  UI ~~~ RG
+  RG ~~~ G1
